@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gabriel Melo de Lima — Portfolio</title>
+    <style>
+      /* --------------------------------------------------
+       CSS Variables & Theme Tokens
+    -------------------------------------------------- */
+      :root {
+        --bg-canvas: #f8fafc;
+        --card-bg: #ffffff;
+        --card-border: #e2e8f0;
+        --text-main: #0f172a;
+        --text-muted: #475569;
+        --text-dim: #64748b;
+        --accent: #2563eb;
+        --accent-subtle: #eff6ff;
+        --accent-border: #bfdbfe;
+        --tag-bg: #f1f5f9;
+        --tag-border: #e2e8f0;
+        --tag-text: #334155;
+        --divider: #e2e8f0;
+        --toast-bg: #0f172a;
+        --toast-text: #f8fafc;
+        --shadow:
+          0 4px 20px -2px rgba(15, 23, 42, 0.05),
+          0 2px 6px -1px rgba(15, 23, 42, 0.03);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-canvas: #090d16;
+          --card-bg: #0f172a;
+          --card-border: #1e293b;
+          --text-main: #f8fafc;
+          --text-muted: #cbd5e1;
+          --text-dim: #94a3b8;
+          --accent: #60a5fa;
+          --accent-subtle: #1e293b;
+          --accent-border: #334155;
+          --tag-bg: #1e293b;
+          --tag-border: #334155;
+          --tag-text: #e2e8f0;
+          --divider: #1e293b;
+          --toast-bg: #1e293b;
+          --toast-text: #f8fafc;
+          --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+      }
+
+      body.theme-dark {
+        --bg-canvas: #090d16;
+        --card-bg: #0f172a;
+        --card-border: #1e293b;
+        --text-main: #f8fafc;
+        --text-muted: #cbd5e1;
+        --text-dim: #94a3b8;
+        --accent: #60a5fa;
+        --accent-subtle: #1e293b;
+        --accent-border: #334155;
+        --tag-bg: #1e293b;
+        --tag-border: #334155;
+        --tag-text: #e2e8f0;
+        --divider: #1e293b;
+        --toast-bg: #1e293b;
+        --toast-text: #f8fafc;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      }
+
+      body.theme-light {
+        --bg-canvas: #f8fafc;
+        --card-bg: #ffffff;
+        --card-border: #e2e8f0;
+        --text-main: #0f172a;
+        --text-muted: #475569;
+        --text-dim: #64748b;
+        --accent: #2563eb;
+        --accent-subtle: #eff6ff;
+        --accent-border: #bfdbfe;
+        --tag-bg: #f1f5f9;
+        --tag-border: #e2e8f0;
+        --tag-text: #334155;
+        --divider: #e2e8f0;
+        --toast-bg: #0f172a;
+        --toast-text: #f8fafc;
+        --shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+      }
+
+      /* --------------------------------------------------
+       Reset & Base Typography
+    -------------------------------------------------- */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter",
+          "Helvetica Neue", Arial, sans-serif;
+        background-color: var(--bg-canvas);
+        color: var(--text-main);
+        line-height: 1.55;
+        font-size: 15px;
+        padding: 48px 24px;
+        display: flex;
+        justify-content: center;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* --------------------------------------------------
+       Comfortable Desktop Container (980px max-width)
+    -------------------------------------------------- */
+      .container {
+        width: 100%;
+        max-width: 980px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 40px 48px;
+        box-shadow: var(--shadow);
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 16px 8px;
+        }
+        .container {
+          padding: 24px 20px;
+          border-radius: 12px;
+        }
+      }
+
+      /* --------------------------------------------------
+       Top Navigation Bar
+    -------------------------------------------------- */
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 22px;
+        border-bottom: 1px solid var(--divider);
+        margin-bottom: 32px;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        background: #10b981;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .lang-switcher {
+        display: inline-flex;
+        background: var(--tag-bg);
+        border: 1px solid var(--tag-border);
+        border-radius: 20px;
+        padding: 3px;
+        gap: 3px;
+      }
+
+      .lang-btn {
+        background: none;
+        border: none;
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-dim);
+        border-radius: 14px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+
+      .lang-btn:hover {
+        color: var(--text-main);
+      }
+
+      .lang-btn.active {
+        background: var(--card-bg);
+        color: var(--accent);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .theme-toggle-btn {
+        background: none;
+        border: 1px solid var(--tag-border);
+        color: var(--text-muted);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .theme-toggle-btn:hover {
+        color: var(--text-main);
+        border-color: var(--accent);
+      }
+
+      /* --------------------------------------------------
+       Two-Column Responsive Grid Layout
+    -------------------------------------------------- */
+      .layout-grid {
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 48px;
+      }
+
+      @media (max-width: 900px) {
+        .layout-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+      }
+
+      /* Left & Right Columns */
+      .col-left,
+      .col-right {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+
+      /* --------------------------------------------------
+       Hero Section
+    -------------------------------------------------- */
+      .hero {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .avatar {
+        width: 68px;
+        height: 68px;
+        border-radius: 14px;
+        object-fit: cover;
+        background: var(--tag-bg);
+        border: 1px solid var(--card-border);
+        flex-shrink: 0;
+      }
+
+      .hero-info {
+        flex: 1;
+      }
+
+      .hero-name {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: var(--text-main);
+        line-height: 1.2;
+      }
+
+      .hero-sub {
+        font-size: 13.5px;
+        color: var(--text-muted);
+        margin-top: 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .hero-sub span.bullet {
+        color: var(--text-dim);
+      }
+
+      /* --------------------------------------------------
+       Credentials / Education Banner
+    -------------------------------------------------- */
+      .cred-banner {
+        background: var(--tag-bg);
+        border: 1px solid var(--tag-border);
+        border-radius: 10px;
+        padding: 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .cred-title {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .cred-school {
+        font-size: 12.5px;
+        color: var(--text-dim);
+      }
+
+      /* --------------------------------------------------
+       Section Typography
+    -------------------------------------------------- */
+      .section-title {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-dim);
+        font-weight: 700;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .section-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--divider);
+      }
+
+      /* --------------------------------------------------
+       Languages Section
+    -------------------------------------------------- */
+      .lang-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .lang-tag {
+        font-size: 13px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        background: var(--tag-bg);
+        border: 1px solid var(--tag-border);
+        color: var(--tag-text);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .lang-tag strong {
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      /* --------------------------------------------------
+       Featured Project Card
+    -------------------------------------------------- */
+      .project-card {
+        border: 1px solid var(--accent-border);
+        background: var(--accent-subtle);
+        border-radius: 12px;
+        padding: 20px 22px;
+      }
+
+      .project-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .project-card-title {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+
+      .badge-app {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 8px;
+        border-radius: 6px;
+        background: var(--card-bg);
+        border: 1px solid var(--accent-border);
+        color: var(--accent);
+        text-transform: uppercase;
+      }
+
+      .project-quote {
+        font-size: 13.5px;
+        font-style: italic;
+        color: var(--accent);
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+
+      .project-desc {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.5;
+        margin-bottom: 14px;
+      }
+
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .pill {
+        font-size: 11.5px;
+        padding: 3px 9px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 5px;
+        color: var(--text-muted);
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      }
+
+      /* --------------------------------------------------
+       Experience Section
+    -------------------------------------------------- */
+      .exp-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .exp-item {
+        border-left: 2px solid var(--card-border);
+        padding-left: 16px;
+        transition: border-color 0.15s ease;
+      }
+
+      .exp-item:hover {
+        border-left-color: var(--accent);
+      }
+
+      .exp-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 4px;
+      }
+
+      .exp-role {
+        font-size: 14.5px;
+        font-weight: 600;
+        color: var(--text-main);
+      }
+
+      .exp-company {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--accent);
+        margin-right: 6px;
+      }
+
+      .exp-tag {
+        font-size: 11.5px;
+        color: var(--text-dim);
+        font-family: ui-monospace, SFMono-Regular, monospace;
+      }
+
+      .exp-desc {
+        font-size: 13.5px;
+        color: var(--text-muted);
+        line-height: 1.45;
+      }
+
+      /* --------------------------------------------------
+       Contact Info & Buttons
+    -------------------------------------------------- */
+      .contact-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .contact-card {
+        background: var(--tag-bg);
+        border: 1px solid var(--tag-border);
+        border-radius: 8px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .contact-details {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .contact-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: var(--text-dim);
+      }
+
+      .contact-val {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-main);
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .contact-val:hover {
+        color: var(--accent);
+        text-decoration: underline;
+      }
+
+      .btn-icon {
+        background: none;
+        border: 1px solid transparent;
+        padding: 6px 8px;
+        border-radius: 6px;
+        color: var(--text-dim);
+        cursor: pointer;
+        font-size: 13px;
+      }
+
+      .btn-icon:hover {
+        background: var(--card-bg);
+        border-color: var(--card-border);
+        color: var(--text-main);
+      }
+
+      .contact-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        font-size: 13px;
+        font-weight: 600;
+        padding: 9px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: all 0.15s ease;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #ffffff;
+      }
+
+      .btn-primary:hover {
+        filter: brightness(1.08);
+      }
+
+      .btn-secondary {
+        background: var(--tag-bg);
+        border-color: var(--tag-border);
+        color: var(--text-main);
+      }
+
+      .btn-secondary:hover {
+        background: var(--card-bg);
+        border-color: var(--accent-border);
+        color: var(--accent);
+      }
+
+      /* --------------------------------------------------
+       Footer & Toast
+    -------------------------------------------------- */
+      .footer {
+        margin-top: 36px;
+        padding-top: 18px;
+        border-top: 1px solid var(--divider);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: var(--text-dim);
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      #toast {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        background: var(--toast-bg);
+        color: var(--toast-text);
+        font-size: 13px;
+        font-weight: 500;
+        padding: 10px 18px;
+        border-radius: 8px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        transform: translateY(12px);
+        pointer-events: none;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
+        z-index: 9999;
+      }
+
+      #toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="image/supimpons_logo_company.jpeg"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <!-- Top Bar: Status + Language Switcher + Theme Toggle -->
+      <header class="top-bar">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span data-i18n="statusText">Open to roles & projects</span>
+        </div>
+
+        <div class="top-actions">
+          <nav aria-label="Language Switcher" class="lang-switcher">
+            <button
+              type="button"
+              class="lang-btn active"
+              id="btn-lang-en"
+              onclick="changeLang('en')"
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              class="lang-btn"
+              id="btn-lang-es"
+              onclick="changeLang('es')"
+            >
+              ES
+            </button>
+            <button
+              type="button"
+              class="lang-btn"
+              id="btn-lang-pt"
+              onclick="changeLang('pt')"
+            >
+              PT
+            </button>
+          </nav>
+
+          <button
+            type="button"
+            class="theme-toggle-btn"
+            id="theme-btn"
+            onclick="toggleTheme()"
+            title="Toggle appearance"
+          >
+            <span id="theme-icon">◐</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- 2-Column Responsive Layout -->
+      <div class="layout-grid">
+        <!-- Left Column: Identity, Bio, Credentials, Languages, Contact -->
+        <aside class="col-left">
+          <!-- Hero -->
+          <section class="hero">
+            <img
+              class="avatar"
+              src="image/profile_pic.png"
+              alt="Gabriel Melo de Lima"
+              onerror="this.style.display = 'none'"
+            />
+            <div class="hero-info">
+              <h1 class="hero-name">Gabriel Melo de Lima</h1>
+              <div class="hero-sub">
+                <span data-i18n="location">São Paulo, Brazil</span>
+                <span class="bullet">•</span>
+                <span data-i18n="techTitle">Systems & IT Technician</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Education -->
+          <section class="cred-banner">
+            <div class="cred-title">
+              <span data-i18n="eduDegree"
+                >Systems Development & IT for the Internet</span
+              >
+              <span class="pill" data-i18n="eduBadge">Technician</span>
+            </div>
+            <div class="cred-school" data-i18n="eduInstitution">
+              ETEC Lauro Gomes — São Paulo
+            </div>
+          </section>
+
+          <!-- Spoken Languages -->
+          <section>
+            <h2 class="section-title" data-i18n="secLanguages">
+              Spoken Languages
+            </h2>
+            <div class="lang-strip">
+              <div class="lang-tag">
+                <strong>PT</strong>
+                <span data-i18n="langPt">Portuguese (Native)</span>
+              </div>
+              <div class="lang-tag">
+                <strong>EN</strong>
+                <span data-i18n="langEn">English (Fluent / C2)</span>
+              </div>
+              <div class="lang-tag">
+                <strong>ES</strong>
+                <span data-i18n="langEs">Spanish (Intermediate / B2)</span>
+              </div>
+              <div class="lang-tag">
+                <strong>FR</strong>
+                <span data-i18n="langStudy">French (Beginner / A1)</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Contact Information -->
+          <section>
+            <h2 class="section-title" data-i18n="secContact">Contact Info</h2>
+            <div class="contact-grid">
+              <div class="contact-card">
+                <div class="contact-details">
+                  <span class="contact-label">Phone & WhatsApp</span>
+                  <a
+                    href="https://wa.me/5511958616257"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-val"
+                  >
+                    +55 11 95861-6257
+                  </a>
+                </div>
+                <button
+                  type="button"
+                  class="btn-icon"
+                  onclick="copyValue('+5511958616257', 'Phone')"
+                  title="Copy Phone"
+                >
+                  📋
+                </button>
+              </div>
+
+              <div class="contact-card">
+                <div class="contact-details">
+                  <span class="contact-label">Email</span>
+                  <a
+                    href="mailto:gabrielmelodelimabr@gmail.com"
+                    class="contact-val"
+                    title="gabrielmelodelimabr@gmail.com"
+                  >
+                    gabrielmelodelimabr@gmail.com
+                  </a>
+                </div>
+                <button
+                  type="button"
+                  class="btn-icon"
+                  onclick="copyValue('gabrielmelodelimabr@gmail.com', 'Email')"
+                  title="Copy Email"
+                >
+                  📋
+                </button>
+              </div>
+            </div>
+
+            <div class="contact-actions">
+              <a
+                href="https://www.linkedin.com/in/gamedeli"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-secondary"
+              >
+                <span>LinkedIn</span>
+                <span>↗</span>
+              </a>
+              <a
+                href="mailto:gabrielmelodelimabr@gmail.com"
+                class="btn-primary"
+                data-i18n="btnSendEmail"
+              >
+                Send Email
+              </a>
+            </div>
+          </section>
+        </aside>
+
+        <!-- Right Column: Projects & Work Experience -->
+        <div class="col-right">
+          <!-- Featured Project -->
+          <section>
+            <h2 class="section-title" data-i18n="secProject">
+              Featured Project
+            </h2>
+            <div class="project-card">
+              <div class="project-card-header">
+                <div style="display: flex; align-items: center; gap: 1rem">
+                  <a
+                    href="https://play.google.com/store/apps/details?id=com.gabriel.supimpons"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-secondary"
+                  >
+                    <h3 class="project-card-title">Supimpons App</h3>
+                    <span>↗</span>
+                  </a>
+                </div>
+                <span class="badge-app" data-i18n="appBadge">Mobile App</span>
+              </div>
+              <p class="project-desc" data-i18n="appDesc">
+                Offline-first language learning application centered around
+                micro-stories, vocabulary reinforcement, intuitive bite-sized
+                reading experiences and spaced repetition systems.
+              </p>
+              <div class="project-tags">
+                <span class="pill">Offline-First</span>
+                <span class="pill">Micro-Stories</span>
+                <span class="pill">Language Education</span>
+                <span class="pill">UI/UX</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Work Experience -->
+          <section>
+            <h2 class="section-title" data-i18n="secExperience">
+              Work Experience
+            </h2>
+            <div class="exp-list">
+              <!-- 1. Akamai -->
+              <article class="exp-item">
+                <div class="exp-header">
+                  <div>
+                    <span class="exp-company">Akamai Technologies</span>
+                    <span class="exp-role" data-i18n="exp1Role"
+                      >Cloud Support Engineer</span
+                    >
+                  </div>
+                  <span class="exp-tag" data-i18n="exp1Tag"
+                    >Cloud Infrastructure</span
+                  >
+                </div>
+                <p class="exp-desc" data-i18n="exp1Desc">
+                  Enterprise technical troubleshooting for cloud delivery, CDN,
+                  and DNS configurations. Supported global enterprise clients
+                  with multilingual technical communication.
+                </p>
+              </article>
+
+              <!-- 2. Boehringer Ingelheim -->
+              <article class="exp-item">
+                <div class="exp-header">
+                  <div>
+                    <span class="exp-company">Boehringer Ingelheim</span>
+                    <span class="exp-role" data-i18n="exp2Role"
+                      >Administrative Operations & Automation</span
+                    >
+                  </div>
+                  <span class="exp-tag" data-i18n="exp2Tag"
+                    >Corporate Operations</span
+                  >
+                </div>
+                <p class="exp-desc" data-i18n="exp2Desc">
+                  Streamlined administrative operations, record validation, and
+                  process automation for internal corporate workflows with high
+                  reliability.
+                </p>
+              </article>
+
+              <!-- 3. Private English Teacher -->
+              <article class="exp-item">
+                <div class="exp-header">
+                  <div>
+                    <span class="exp-company" data-i18n="exp3Org"
+                      >Independent</span
+                    >
+                    <span class="exp-role" data-i18n="exp3Role"
+                      >Private English Teacher & Language Coach</span
+                    >
+                  </div>
+                  <span class="exp-tag" data-i18n="exp3Tag"
+                    >Bilingual Coaching</span
+                  >
+                </div>
+                <p class="exp-desc" data-i18n="exp3Desc">
+                  Individualized ESL coaching tailored to conversational
+                  readiness, professional technical communication, and student
+                  learning goals.
+                </p>
+              </article>
+
+              <!-- 4. Skinão do Surf -->
+              <article class="exp-item">
+                <div class="exp-header">
+                  <div>
+                    <span class="exp-company">Skinão do Surf</span>
+                    <span class="exp-role" data-i18n="exp4Role"
+                      >Salesperson & Customer Operations</span
+                    >
+                  </div>
+                  <span class="exp-tag" data-i18n="exp4Tag"
+                    >Retail & Service</span
+                  >
+                </div>
+                <p class="exp-desc" data-i18n="exp4Desc">
+                  Direct retail sales, customer negotiation, POS operations, and
+                  inventory organization in a dynamic, high-engagement
+                  environment.
+                </p>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Compact Footer -->
+      <footer class="footer">
+        <span>© 2026 Gabriel Melo de Lima</span>
+        <span data-i18n="footerNote">Compact Minimalist Portfolio</span>
+      </footer>
+    </main>
+
+    <!-- Non-intrusive Toast Box -->
+    <div id="toast" role="status" aria-live="polite">Copied to clipboard</div>
+
+    <!-- Script: Internationalization, Theme, Clipboard -->
+    <script>
+      const i18nData = {
+        en: {
+          statusText: "Open to roles & projects",
+          location: "São Paulo, Brazil",
+          techTitle: "Systems & IT Technician",
+          eduDegree: "Systems Development & IT for the Internet",
+          eduBadge: "Technician",
+          eduInstitution: "ETEC Lauro Gomes — São Paulo",
+          secLanguages: "Spoken Languages",
+          langPt: "Portuguese (Native)",
+          langEn: "English (Fluent / C2)",
+          langEs: "Spanish (Intermediate / B2)",
+          langStudy: "French (Beginner / A1)",
+          secProject: "Featured Project",
+          appBadge: "Mobile App",
+          appMotto: '"Tiny Tales for Curious Minds"',
+          appDesc:
+            "Offline-first language learning application centered around micro-stories, vocabulary reinforcement, intuitive bite-sized reading experiences, and spaced repetition systems.",
+          secExperience: "Work Experience",
+          exp1Role: "Cloud Support Engineer",
+          exp1Tag: "Cloud Infrastructure",
+          exp1Desc:
+            "Enterprise technical troubleshooting for cloud delivery, CDN, and DNS configurations. Supported global enterprise clients with multilingual technical communication.",
+          exp2Role: "Administrative Operations & Automation",
+          exp2Tag: "Corporate Operations",
+          exp2Desc:
+            "Streamlined administrative operations, record validation, and process automation for internal corporate workflows with high reliability.",
+          exp3Org: "Independent",
+          exp3Role: "Private English Teacher & Language Coach",
+          exp3Tag: "Bilingual Coaching",
+          exp3Desc:
+            "Individualized ESL coaching tailored to conversational readiness, professional technical communication, and student learning goals.",
+          exp4Role: "Salesperson & Customer Operations",
+          exp4Tag: "Retail & Service",
+          exp4Desc:
+            "Direct retail sales, customer negotiation, POS operations, and inventory organization in a dynamic, high-engagement environment.",
+          secContact: "Contact Info",
+          btnSendEmail: "Send Email",
+          footerNote: "Compact Minimalist Portfolio",
+        },
+        es: {
+          statusText: "Disponible para empleo y proyectos",
+          location: "São Paulo, Brasil",
+          techTitle: "Técnico en Sistemas e Internet",
+          eduDegree: "Desarrollo de Sistemas e Informática para Internet",
+          eduBadge: "Técnico",
+          eduInstitution: "ETEC Lauro Gomes — São Paulo",
+          secLanguages: "Idiomas",
+          langPt: "Portugués (Nativo)",
+          langEn: "Inglés (Fluido / C2)",
+          langEs: "Español (Intermedio / B2)",
+          langStudy: "Francés (Principiante / A1)",
+          secProject: "Proyecto Destacado",
+          appBadge: "App Móvil",
+          appMotto: '"Tiny Tales for Curious Minds"',
+          appDesc:
+            "Aplicación offline-first para el aprendizaje de idiomas centrada en microhistorias, refuerzo de vocabulario, experiencias intuitivas de lectura breve y sistemas de repetición espaciada.",
+          secExperience: "Experiencia Laboral",
+          exp1Role: "Cloud Support Engineer",
+          exp1Tag: "Infraestructura Cloud",
+          exp1Desc:
+            "Resolución de incidencias técnicas en infraestructura cloud, CDN y DNS para clientes corporativos internacionales con soporte multilingüe.",
+          exp2Role: "Operaciones Administrativas y Automatización",
+          exp2Tag: "Operaciones Corporativas",
+          exp2Desc:
+            "Optimización de procesos administrativos, control de registros y automatización de flujos de trabajo internos con alta precisión.",
+          exp3Org: "Independiente",
+          exp3Role: "Profesor Particular de Inglés & Coach",
+          exp3Tag: "Enseñanza Bilingüe",
+          exp3Desc:
+            "Clases personalizadas de inglés orientadas a la conversación, terminología técnica y objetivos profesionales de cada alumno.",
+          exp4Role: "Ventas y Atención al Cliente",
+          exp4Tag: "Ventas y Comercio",
+          exp4Desc:
+            "Ventas directas, asesoramiento a clientes, cobros de caja y organización de inventario en entorno de alta interacción.",
+          secContact: "Contacto",
+          btnSendEmail: "Enviar Email",
+          footerNote: "Portfolio Minimalista y Compacto",
+        },
+        pt: {
+          statusText: "Disponível para vagas e projetos",
+          location: "São Paulo, Brasil",
+          techTitle: "Técnico em Sistemas e TI para Internet",
+          eduDegree: "Desenvolvimento de Sistemas e Informática para Internet",
+          eduBadge: "Técnico",
+          eduInstitution: "ETEC Lauro Gomes — São Paulo",
+          secLanguages: "Idiomas",
+          langPt: "Português (Nativo)",
+          langEn: "Inglês (Fluente / C2)",
+          langEs: "Espanhol (Intermediário / B2)",
+          langStudy: "Francês (Iniciante / A1)",
+          secProject: "Projeto em Destaque",
+          appBadge: "Aplicativo Mobile",
+          appMotto: '"Tiny Tales for Curious Minds"',
+          appDesc:
+            "Aplicativo offline-first para o aprendizado de idiomas focado em microcontos, fixação de vocabulário, leitura intuitiva em doses diárias e sistemas de repetição espaçada.",
+          secExperience: "Experiência Profissional",
+          exp1Role: "Cloud Support Engineer",
+          exp1Tag: "Infraestrutura Cloud",
+          exp1Desc:
+            "Diagnóstico e resolução técnica de incidentes em cloud, CDN e DNS para clientes corporativos multinacionais em múltiplos idiomas.",
+          exp2Role: "Rotinas Administrativas e Automação",
+          exp2Tag: "Operações Corporativas",
+          exp2Desc:
+            "Otimização de processos administrativos, conferência de dados e automação de rotinas internas com pontualidade e precisão.",
+          exp3Org: "Autônomo",
+          exp3Role: "Professor Particular de Inglês",
+          exp3Tag: "Ensino de Idiomas",
+          exp3Desc:
+            "Aulas individuais de inglês com foco em conversação prática, vocabulário corporativo e metodologia adaptada a cada objetivo.",
+          exp4Role: "Vendas e Atendimento ao Cliente",
+          exp4Tag: "Varejo & Atendimento",
+          exp4Desc:
+            "Vendas diretas no balcão, negociação com clientes, operação de caixa e controle ágil de estoque.",
+          secContact: "Informações de Contato",
+          btnSendEmail: "Enviar Mensagem",
+          footerNote: "Portfólio Compacto & Minimalista",
+        },
+      };
+
+      let activeLang = "en";
+
+      function changeLang(lang) {
+        if (!i18nData[lang]) return;
+        activeLang = lang;
+
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (i18nData[lang][key]) {
+            el.textContent = i18nData[lang][key];
+          }
+        });
+
+        ["en", "es", "pt"].forEach((code) => {
+          const btn = document.getElementById(`btn-lang-${code}`);
+          if (code === lang) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+      }
+
+      function copyValue(text, label) {
+        try {
+          const input = document.createElement("textarea");
+          input.value = text;
+          input.style.position = "fixed";
+          input.style.opacity = "0";
+          document.body.appendChild(input);
+          input.select();
+          document.execCommand("copy");
+          document.body.removeChild(input);
+          showToast(`${label} copied!`);
+        } catch (err) {
+          showToast("Failed to copy");
+        }
+      }
+
+      let toastTimer;
+      function showToast(msg) {
+        const toast = document.getElementById("toast");
+        toast.textContent = msg;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2000);
+      }
+
+      function toggleTheme() {
+        const isDark =
+          document.body.classList.contains("theme-dark") ||
+          (!document.body.classList.contains("theme-light") &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+        if (isDark) {
+          document.body.classList.remove("theme-dark");
+          document.body.classList.add("theme-light");
+        } else {
+          document.body.classList.remove("theme-light");
+          document.body.classList.add("theme-dark");
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        changeLang("en");
+      });
+    </script>
+  </body>
+</html>
